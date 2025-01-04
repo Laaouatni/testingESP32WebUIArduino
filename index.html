@@ -11,10 +11,15 @@
   <!--PROD-->
   <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
   <script>
-    console.log(laaState)
+    const ipEsp32 = '';
+    const ws = new WebSocket(`ws://${ipEsp32}/ws`);
+
+    ws.addEventListener("message", (message) => {
+      console.log(message.data);
+    })
   </script>
 </head>
 <body>
-  
+  <input type="text" onclick="ws.send(this.value)"><input/>
 </body>
 </html>
