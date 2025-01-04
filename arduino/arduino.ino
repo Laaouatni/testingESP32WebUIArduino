@@ -12,9 +12,9 @@ void loop() {
   String receivedString = "";
   int nCharsToRead = laaSerial.available();
   if (nCharsToRead > 0) {
-    data += (char)laaSerial.read();
+    receivedString += (char)laaSerial.read();
   };
   if (!(nCharsToRead == 0 && receivedString != "")) return;
 
-  Serial.println("received data is: " + String(data));
+  Serial.println("received data is: " + String(receivedString));
 }
