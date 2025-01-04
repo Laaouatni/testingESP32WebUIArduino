@@ -32,7 +32,7 @@ void setup() {
     const String thisStringData = String((char *)data).substring(0, len);
 
     ws.textAll(thisStringData);
-    Serial2.println(thisStringData);
+    Serial2.println(String(thisStringData));
     Serial.println("I received and resent: " + thisStringData);
   });
 
