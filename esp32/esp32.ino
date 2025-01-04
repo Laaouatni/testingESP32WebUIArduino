@@ -33,7 +33,7 @@ void setup() {
 
     ws.textAll(thisStringData);
     Serial2.println(thisStringData);
-    Serial.println(thisStringData);
+    Serial.println("I received and resent: " + thisStringData);
   });
 
   server.addHandler(&ws);
