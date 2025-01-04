@@ -13,25 +13,16 @@
   <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
   <script>
     const ipEsp32 = '192.168.113.49';
+    const failesWebSockets = {}
+    let ws = new WebSocket(`ws://${ipEsp32}/ws`);
 
-    const ws = connectToWebSocket((message) => {
-      console.log('Message received:', message.data);
+    ws.addEventListener("close", () => {
+      window.location.reload();
     });
 
-    function connectToWebSocket(callback) {
-      const ws = new WebSocket(`ws://${ipEsp32}/ws`);
-      ws.addEventListener("close", () => {
-        console.log('Connection closed');
-        setTimeout(() => {
-          console.log('Reconnecting...');
-          connectToWebSocket();
-        }, 1000);
-      });
-      ws.addEventListener("message", (message) => {
-        callback(message);
-      });
-      return ws;
-    }
+    ws.addEventListener("message", (message) => {
+      console.log(message.data);
+    });
   </script>
 </head>
 
