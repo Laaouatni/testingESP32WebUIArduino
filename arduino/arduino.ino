@@ -14,7 +14,7 @@ void loop() {
   if (nCharsToRead > 0) {
     data += (char)laaSerial.read();
   };
-  if ((nCharsToRead == 0 && receivedString != "")) return;
+  if (!(nCharsToRead == 0 && receivedString != "")) return;
 
   Serial.println("received data is: " + String(data));
 }
