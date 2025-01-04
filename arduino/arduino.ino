@@ -2,16 +2,19 @@
 
 SoftwareSerial laaSerial(2, 3);  // RX, TX
 
-void setup() { 
+void setup() {
   laaSerial.begin(115200);
   Serial.begin(9600);
 }
 
 void loop() {
   laaSerial.listen();
+  String receivedString = "";
+  int nCharsToRead = laaSerial.available();
+  if (nCharsToRead > 0) {
+    data += (char)laaSerial.read();
+  };
+  if ((nCharsToRead == 0 && receivedString != "")) return;
 
-  if(!laaSerial.available()) return; 
-  const String data = laaSerial.readString();
-  Serial.print("nuovi dati arrivati");
-  Serial.println(data);
+  Serial.println("received data is: " + String(data));
 }
