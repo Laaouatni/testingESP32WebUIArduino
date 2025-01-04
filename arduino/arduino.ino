@@ -14,7 +14,7 @@ void loop() {
 }
 
 void myPrintln(String value) {
-  Seria l.println("received from esp32: " + value);
+  Serial.println("received from esp32: " + value);
 }
 
 String listenToNewSerialData(void (*myCallback)(String)) {
