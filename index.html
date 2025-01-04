@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +13,30 @@
   <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
   <script>
     const ipEsp32 = '192.168.113.49';
-    const ws = new WebSocket(`ws://${ipEsp32}/ws`);
 
-    ws.addEventListener("message", (message) => {
-      console.log(message.data);
+    const ws = connectToWebSocket((message) => {
+      console.log('Message received:', message.data);
     });
 
-    ws.addEventListener("clone", () => {
-      console.log("ESP32 crashed! Reconnecting... after 2 seconds");
-      setTimeout(() => {
-        ws = new WebSocket(`ws://${ipEsp32}/ws`);
-      }, 2000);
-    });
+    function connectToWebSocket(callback) {
+      const ws = new WebSocket(`ws://${ipEsp32}/ws`);
+      ws.addEventListener("close", () => {
+        console.log('Connection closed');
+        setTimeout(() => {
+          console.log('Reconnecting...');
+          connectToWebSocket();
+        }, 1000);
+      });
+      ws.addEventListener("message", (message) => {
+        callback(message);
+      });
+      return ws;
+    }
   </script>
 </head>
+
 <body class="p-2 bg-gray-200">
   <input type="text" class="border-2 border-black rounded-md" oninput="ws.send(this.value)"></input>
 </body>
+
 </html>
