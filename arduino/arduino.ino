@@ -9,8 +9,7 @@ void setup() {
 
 void loop() {
   laaSerial.listen();
-  
-  listenToNewSerialData(&myPrintln);
+
   listenToNewSerialData(&myPrintln);
 }
 
