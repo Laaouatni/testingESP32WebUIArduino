@@ -16,7 +16,14 @@
 
     ws.addEventListener("message", (message) => {
       console.log(message.data);
-    })
+    });
+
+    ws.addEventListener("clone", () => {
+      console.log("ESP32 crashed! Reconnecting... after 2 seconds");
+      setTimeout(() => {
+        ws = new WebSocket(`ws://${ipEsp32}/ws`);
+      }, 2000);
+    });
   </script>
 </head>
 <body class="p-2 bg-gray-200">
