@@ -9,6 +9,8 @@ void setup() {
 
 void loop() {
   laaSerial.listen();
+  
+  listenToNewSerialData(&myPrintln);
   listenToNewSerialData(&myPrintln);
 }
 
@@ -19,8 +21,8 @@ void myPrintln(String value) {
 String listenToNewSerialData(void (*myCallback)(String)) {
   static String receivedString;
 
-  while (Serial.available() > 0) {
-    const char thisChar = Serial.read();
+  while (laaSerial.available() > 0) {
+    const char thisChar = laaSerial.read();
     const bool isLastChar = thisChar == '\n';
 
     if (!isLastChar) {
