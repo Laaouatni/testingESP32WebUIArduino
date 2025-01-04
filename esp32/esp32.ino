@@ -6,8 +6,8 @@ AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
 void setup() {
-  Serial.begin(115200);
-  Serial2.begin(115200, SERIAL_8N1, 16, 17);
+  Serial.begin(9600);
+  Serial2.begin(9600, SERIAL_8N1, 16, 17);
   WiFi.begin("nomeWifi", "passwordWifi");
 
   while (WiFi.status() != WL_CONNECTED) {
