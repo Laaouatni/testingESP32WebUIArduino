@@ -11,7 +11,7 @@
   <!--PROD-->
   <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
   <script>
-    const ipEsp32 = '';
+    const ipEsp32 = '192.168.113.49';
     const ws = new WebSocket(`ws://${ipEsp32}/ws`);
 
     ws.addEventListener("message", (message) => {
@@ -19,7 +19,7 @@
     })
   </script>
 </head>
-<body>
-  <input type="text" onclick="ws.send(this.value)"><input/>
+<body class="p-2 bg-gray-200">
+  <input type="text" class="border-2 border-black rounded-md" onchange="ws.send(this.value)"><input/>
 </body>
 </html>

@@ -10,7 +10,8 @@ void setup() {
   Serial2.begin(115200);
   WiFi.begin("nomeWifi", "passwordWifi");
 
-  while (WiFi.status() != WL_CONNECTED) {};
+  while (WiFi.status() != WL_CONNECTED) {
+  };
   Serial.println("WiFi connected! IP Address: " + WiFi.localIP().toString());
 
   ws.onEvent([](AsyncWebSocket *server, AsyncWebSocketClient *client,
@@ -19,12 +20,16 @@ void setup() {
     const bool isDisconnecting = type == WS_EVT_DISCONNECT;
     const bool hasData = type == WS_EVT_DATA;
 
-    if (isConnecting)     Serial.println("WebSocket Client Connected! IP Address: " + client->remoteIP().toString());
-    if (isDisconnecting)  Serial.println("WebSocket Client Disconnected! IP Address: " + client->remoteIP().toString());
-    
+    if (isConnecting)
+      Serial.println("WebSocket Client Connected! IP Address: " +
+                     client->remoteIP().toString());
+    if (isDisconnecting)
+      Serial.println("WebSocket Client Disconnected! IP Address: " +
+                     client->remoteIP().toString());
+
     if (!hasData) return;
 
-    const String thisStringData = String((char*)data).substring(0, len);
+    const String thisStringData = String((char *)data).substring(0, len);
 
     ws.textAll(thisStringData);
     Serial2.println(thisStringData);
@@ -34,11 +39,12 @@ void setup() {
   server.begin();
 }
 
-void loop() { 
-  ws.cleanupClients(); // Remove disconnected clients
+void loop() {
+  ws.cleanupClients();  // Remove disconnected clients
 
   if (Serial2.available()) {
     const String data = Serial2.readString();
+    Serial.println(data);
     ws.textAll(data);
   }
 };
