@@ -9,14 +9,28 @@ void setup() {
 
 void loop() {
   laaSerial.listen();
-  Serial.print(laaSerial.readStringUntil('\n'));
-  // String receivedString = "";
-  // int nCharsToRead = laaSerial.available();
-  // if (nCharsToRead > 0) {
-  //   receivedString += (char)laaSerial.read();
-  //   Serial.println("nCharsToRead: " + String(receivedString));
-  // };
-  // if (!(nCharsToRead == 0 && receivedString != "")) return;
-
-  // Serial.println("received data is: " + String(receivedString));
+  listenToNewSerialData(&myPrintln);
 }
+
+void myPrintln(String value) {
+  Serial.println("received from esp32: " + value);
+}
+
+String listenToNewSerialData(void (*myCallback)(String)) {
+  static String receivedString;
+
+  while (Serial.available() > 0) {
+    const char thisChar = Serial.read();
+    const bool isLastChar = thisChar == '\n';
+
+    if (!isLastChar) {
+      receivedString += thisChar;
+      continue;
+    };
+
+    myCallback(receivedString);
+    receivedString = "";
+  };
+
+  return "";
+};
