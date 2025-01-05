@@ -20,14 +20,33 @@
       window.location.reload();
     });
 
+    const globalState = new laaState({});
+
     ws.addEventListener("message", (message) => {
       console.log(message.data);
+      if(message.data.includes("=")) {
+        globalState.state.led = message.data.split("=")[1];
+      }
     });
   </script>
 </head>
 
 <body class="p-2 bg-gray-200">
+  <laa-led></laa-led>
+
   <input type="text" class="border-2 border-black rounded-md" oninput="ws.send(this.value)"></input>
+
+  <template id="laa-led" class="grid {thisComponent.state.isLedOn == 1 ? 'bg-green-500' : 'bg-red-500'}">
+    <div class="grid">
+      led
+    </div>
+    <script>
+      const thisComponent = document.currentScript.parentElement;
+      globalState.listenToVariableChange("led", (value) => {
+        thisComponent.state.isLedOn = value;
+      })
+    </script>
+  </template>
 </body>
 
 </html>
