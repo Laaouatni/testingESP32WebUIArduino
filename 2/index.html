@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- https://raw.githubusercontent.com/Laaouatni/laaWebComponentLibrary/refs/heads/main/laaWebComponentLibrary.js -->
+  <!--DEV-->
+  <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.js"></script>
+  <!--PROD-->
+  <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
+  <script>
+    const ipEsp32 = '192.168.113.49';
+    const failesWebSockets = {}
+    let ws = new WebSocket(`ws://${ipEsp32}/ws`);
+
+    ws.addEventListener("close", () => {
+      window.location.reload();
+    });
+
+    ws.addEventListener("message", (message) => {
+      console.log(message.data);
+    });
+  </script>
+</head>
+
+<body class="p-2 bg-gray-200">
+  <input type="text" class="border-2 border-black rounded-md" oninput="ws.send(this.value)"></input>
+</body>
+
+</html>
