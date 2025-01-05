@@ -10,10 +10,10 @@ void setup() {
 void loop() {
   Serial2.listen();
 
-  listenToNewSerialData(&myPrintln);
+  listenToNewSerialData(&myCallback);
 }
 
-void myPrintln(String value) {
+void myCallback(String value) {
   Serial.println("received from esp32: " + value);
 }
 
