@@ -41,11 +41,30 @@ void setup() {
 }
 
 void loop() {
-  ws.cleanupClients();  // Remove disconnected clients
+  ws.cleanupClients();
 
-  if (Serial2.available()) {
-    const String data = Serial2.readString();
-    Serial.println(data);
-    ws.textAll(data);
-  }
+  listenToNewSerialData(&myCallback);
+};
+
+void myCallback(String arduinoValue) {
+  ws.textAll(arduinoValue);
+}
+
+String listenToNewSerialData(void (*myCallback)(String)) {
+  static String receivedString;
+
+  while (Serial2.available() > 0) {
+    const char thisChar = Serial2.read();
+    const bool isLastChar = thisChar == '\n';
+
+    if (!isLastChar) {
+      receivedString += thisChar;
+      continue;
+    };
+
+    myCallback(receivedString);
+    receivedString = "";
+  };
+
+  return "";
 };
