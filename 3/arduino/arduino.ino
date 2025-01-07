@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-SoftwareSerial Serial2(2, 3); // RX, TX
+SoftwareSerial Serial2(2, 3);  // RX, TX
 
 struct ArduinoComponents {
   const int led = 7;
@@ -24,10 +24,12 @@ void loop() {
   const int isLedOn = digitalRead(arduinoComponents.led);
   const bool canSendButtonData = isButtonClicked != wasButtonClicked;
 
-  if(canSendButtonData) {
-    Serial2.println(
-      
-      "{'button': " + String(isButtonClicked) + "'isLedOn':" +  "}");
+  if (canSendButtonData) {
+    Serial2.println(String("{'button':")
+                        .concat(String(isButtonClicked))
+                        .concat(",'isLedOn':")
+                        .concat(String(isLedOn))
+                        .concat("}"));
   };
 
   wasButtonClicked = isButtonClicked;
