@@ -33,6 +33,7 @@ void setup() {
 
     ws.textAll(thisStringData);
     Serial2.println(thisStringData);
+    
   });
 
   server.addHandler(&ws);
