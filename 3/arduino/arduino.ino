@@ -15,14 +15,16 @@ void setup() {
 }
 
 bool wasButtonClicked = false;
+bool clientLedStatus = false;
 
 void loop() {
   listenToNewSerialData(&myCallback);
 
   const int isButtonClicked = digitalRead(arduinoComponents.button);
-  digitalWrite(arduinoComponents.led, isButtonClicked);
+  digitalWrite(arduinoComponents.led, isButtonClicked || clientLedStatus);
   const int isLedOn = digitalRead(arduinoComponents.led);
-  const bool canSendButtonData = isButtonClicked != wasButtonClicked;
+  const bool canSendButtonData =
+      isButtonClicked != wasButtonClicked || isLedOn != clientLedStatus;
 
   if (canSendButtonData) {
     Serial2.println(String("{'button':")
@@ -35,9 +37,7 @@ void loop() {
   wasButtonClicked = isButtonClicked;
 }
 
-void myCallback(String esp32value) {
-  Serial.println("received from esp32: " + esp32value);
-}
+void myCallback(String esp32value) {}
 
 String listenToNewSerialData(void (*myCallback)(String)) {
   static String receivedString;
