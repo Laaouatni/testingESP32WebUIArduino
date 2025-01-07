@@ -21,7 +21,7 @@
     });
 
     ws.addEventListener("message", (message) => {
-      globalState.state.led = message;
+      globalState.state.isLedOn = message;
     });
   </script>
 </head>
@@ -34,7 +34,7 @@
     <input type="range" min="0" max="1" step="1" value="{thisComponent.state.isLedOn}" oninput="globalState.state.led = this.value">
     <script>
       const thisComponent = document.currentScript.parentElement;
-      globalState.listenToVariableChange("led", (value) => thisComponent.state.isLedOn = value);
+      globalState.listenToVariableChange("isLedOn", (value) => thisComponent.state.isLedOn = value);
     </script>
   </template>
 </body>
