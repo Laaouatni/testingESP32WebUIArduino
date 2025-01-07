@@ -1,25 +1,31 @@
 #include <SoftwareSerial.h>
+SoftwareSerial Serial2(2, 3); // RX, TX
 
-SoftwareSerial Serial2(2, 3);  // RX, TX
 
-bool wasButtonClicked = false;
+struct ArduinoComponents {
+  const int led = 7;
+  const int button = 5;
+} arduinoComponents;
 
 void setup() {
   Serial2.begin(9600);
   Serial.begin(9600);
 
-  pinMode(5, OUTPUT);
-  pinMode(8, INPUT);
+  pinMode(arduinoComponents.led, OUTPUT);
+  pinMode(arduinoComponents.button, INPUT);
 }
+
+bool wasButtonClicked = false;
 
 void loop() {
   listenToNewSerialData(&myCallback);
 
-  const int isButtonClicked = digitalRead(8);
-  if(isButtonClicked != wasButtonClicked) {
-    Serial2.println("$digitalRead(8)=" + String(isButtonClicked));
+  const int isButtonClicked = digitalRead(arduinoComponents.button);
+  const bool canSendButtonData = isButtonClicked != wasButtonClicked;
+
+  if(canSendButtonData) {
+    Serial2.println(isButtonClicked);
   };
-  digitalWrite(5, isButtonClicked);
 
   wasButtonClicked = isButtonClicked;
 }
