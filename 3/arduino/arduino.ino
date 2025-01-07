@@ -1,7 +1,6 @@
 #include <SoftwareSerial.h>
 SoftwareSerial Serial2(2, 3); // RX, TX
 
-
 struct ArduinoComponents {
   const int led = 7;
   const int button = 5;
@@ -21,10 +20,14 @@ void loop() {
   listenToNewSerialData(&myCallback);
 
   const int isButtonClicked = digitalRead(arduinoComponents.button);
+  digitalWrite(arduinoComponents.led, isButtonClicked);
+  const int isLedOn = digitalRead(arduinoComponents.led);
   const bool canSendButtonData = isButtonClicked != wasButtonClicked;
 
   if(canSendButtonData) {
-    Serial2.println(isButtonClicked);
+    Serial2.println(
+      
+      "{'button': " + String(isButtonClicked) + "'isLedOn':" +  "}");
   };
 
   wasButtonClicked = isButtonClicked;
