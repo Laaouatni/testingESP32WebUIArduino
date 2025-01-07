@@ -28,10 +28,10 @@ void loop() {
 
   if (canSendButtonData) {
     const String jsonResponse = 
-      "arduino:{" + 
+      String("arduino:{" + 
         "'button':" + String(isButtonClicked) +
         ",'isLedOn':" + String(isLedOn) 
-    + "}";
+    + "}");
     
     Serial2.println(jsonResponse);
   };
