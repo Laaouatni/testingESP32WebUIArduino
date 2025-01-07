@@ -27,11 +27,13 @@ void loop() {
       isButtonClicked != wasButtonClicked || isLedOn != clientLedStatus;
 
   if (canSendButtonData) {
-    Serial2.println(String("{'button':")
-                        .concat(String(isButtonClicked))
+    Serial2.println(String("arduino: {")
+                        .concat("{'button':")
+                          .concat(String(isButtonClicked))
                         .concat(",'isLedOn':")
-                        .concat(String(isLedOn))
-                        .concat("}"));
+                          .concat(String(isLedOn))
+                        .concat("}")
+                    .concat("}"));
   };
 
   wasButtonClicked = isButtonClicked;
