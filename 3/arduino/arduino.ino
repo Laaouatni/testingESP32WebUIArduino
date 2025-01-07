@@ -27,12 +27,9 @@ void loop() {
       isButtonClicked != wasButtonClicked || isLedOn != clientLedStatus;
 
   if (canSendButtonData) {
-    const String jsonResponse = 
-      String("arduino:{" + 
-        "'button':" + String(isButtonClicked) +
-        ",'isLedOn':" + String(isLedOn) 
-    + "}");
-    
+    const String jsonResponse = "arduino:{'button':" + String(isButtonClicked) +
+                                ",'isLedOn':" + String(isLedOn) + "}";
+
     Serial2.println(jsonResponse);
   };
 
