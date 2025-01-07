@@ -39,7 +39,12 @@ void loop() {
   wasButtonClicked = isButtonClicked;
 }
 
-void myCallback(String esp32value) {}
+void myCallback(String esp32value) {
+  const int isClient = esp32value.indexOf("client") != -1;
+  if (!isClient) return;
+  const int isLedOn = esp32value.indexOf("isLedOn:1") != -1;
+  clientLedStatus = isLedOn;
+};
 
 String listenToNewSerialData(void (*myCallback)(String)) {
   static String receivedString;
