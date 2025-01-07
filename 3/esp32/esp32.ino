@@ -10,8 +10,7 @@ void setup() {
   Serial2.begin(9600, SERIAL_8N1, 16, 17);
   WiFi.begin("nomeWifi111", "12345678");
 
-  while (WiFi.status() != WL_CONNECTED) {
-  };
+  while (WiFi.status() != WL_CONNECTED) {};
   Serial.println("WiFi connected! IP Address: " + WiFi.localIP().toString());
 
   ws.onEvent([](AsyncWebSocket *server, AsyncWebSocketClient *client,
@@ -33,7 +32,7 @@ void setup() {
 
     ws.textAll(thisStringData);
     Serial2.println(thisStringData);
-    
+    Serial.println("⬅️ ho ricevuto dal CLIENT un messaggio e ➡️ inoltrato ai altri: " + String(thisStringData));
   });
 
   server.addHandler(&ws);
@@ -46,6 +45,7 @@ void loop() {
 };
 
 void myCallback(String arduinoValue) {
+  Serial.println("⬅️ ho ricevuto da ARDUINO un messaggio e ➡️ inoltrato ai altri: " + arduinoValue);
   ws.textAll(arduinoValue);
 }
 
