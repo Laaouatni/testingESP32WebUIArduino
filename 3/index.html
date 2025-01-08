@@ -12,7 +12,7 @@
   <!--PROD-->
   <!-- <script src="https://cdn.jsdelivr.net/gh/Laaouatni/laaWebComponentLibrary/laaWebComponentLibrary.min.js"></script> -->
   <script>
-    const ipEsp32 = '192.168.113.49';
+    const ipEsp32 = '192.168.204.49';
     const ws = new WebSocket(`ws://${ipEsp32}/ws`);
     const globalState = new laaState({});
 
@@ -20,10 +20,14 @@
       window.location.reload();
     });
 
-    ws.addEventListener("message", (message) => {
-      console.log(message);
-      globalState.state.isLedOn = message;
-    });
+    ws.addEventListener("message",
+      /**
+       * @type {(message: {data: {button: number, isLedOn: number}}) => void}
+       */
+      (message) => {
+        console.log(message.data);
+        globalState.state.isLedOn = message.data.isLedOn;
+      });
   </script>
 </head>
 
@@ -32,7 +36,8 @@
 
   <template id="laa-led" class="grid {thisComponent.state.isLedOn == 1 ? 'bg-green-500' : 'bg-red-500'}">
     il led è <span data-var="{thisComponent.state.isLedOn ? 'accesso' : 'spento'}"></span>
-    <input type="range" min="0" max="1" step="1" value="{thisComponent.state.isLedOn}" oninput="globalState.state.led = this.value">
+    <input type="range" min="0" max="1" step="1" value="{thisComponent.state.isLedOn}"
+      oninput="globalState.state.isLedOn = this.value">
     <script>
       const thisComponent = document.currentScript.parentElement;
       globalState.listenToVariableChange("isLedOn", (value) => thisComponent.state.isLedOn = value);
