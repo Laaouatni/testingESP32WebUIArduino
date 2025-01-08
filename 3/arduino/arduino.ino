@@ -14,7 +14,7 @@ void setup() {
   pinMode(arduinoComponents.button, INPUT);
 }
 
-bool wasButtonClicked = false;
+bool wasButtonClicked = true;
 bool clientLedStatus = false;
 
 void loop() {
