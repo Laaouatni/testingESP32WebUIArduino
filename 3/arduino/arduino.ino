@@ -26,7 +26,8 @@ void loop() {
   const int isLedOn = digitalRead(arduinoComponents.led);
   // Serial.println("valore led arduino: " + String(isLedOn));
   const bool canSendButtonData =
-      isButtonClicked != wasButtonClicked && isLedOn != clientLedStatus;
+      isButtonClicked != wasButtonClicked;
+      // && isLedOn != clientLedStatus;
 
   // Serial.println(canSendButtonData ? "✅ arduino può mandare il messaggio" : "❌ valore vecchio, non mando nessun json");
 
