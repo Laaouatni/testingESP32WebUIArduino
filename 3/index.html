@@ -21,12 +21,9 @@
     });
 
     ws.addEventListener("message",
-      /**
-       * @type {(message: {data: {button: number, isLedOn: number}}) => void}
-       */
       (message) => {
-        console.log(message.data);
-        globalState.state.isLedOn = message.data.isLedOn;
+        console.log(message);
+        // globalState.state.isLedOn = JSON.parse(message.data).arduino.isLedOn;
       });
   </script>
 </head>
@@ -41,9 +38,9 @@
     <script>
       const thisComponent = document.currentScript.parentElement;
       thisComponent.state.isLedOn = 0;
-      globalState.listenToVariableChange("isLedOn", (value) => { 
-        console.log(value);
-        thisComponent.state.isLedOn = value 
+      globalState.listenToVariableChange("isLedOn", (value) => {
+        thisComponent.state.isLedOn = value;
+        console.log(thisComponent.state.isLedOn);
       });
     </script>
   </template>
