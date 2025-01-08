@@ -21,14 +21,14 @@ void loop() {
   listenToNewSerialData(&myCallback);
 
   const int isButtonClicked = digitalRead(arduinoComponents.button);
-  Serial.println("arduino isButtonClicked: " + String(isButtonClicked));
+  // Serial.println("arduino isButtonClicked: " + String(isButtonClicked));
   digitalWrite(arduinoComponents.led, isButtonClicked || clientLedStatus);
   const int isLedOn = digitalRead(arduinoComponents.led);
-  Serial.println("valore led arduino: " + String(isLedOn));
+  // Serial.println("valore led arduino: " + String(isLedOn));
   const bool canSendButtonData =
-      isButtonClicked != wasButtonClicked || isLedOn != clientLedStatus;
+      isButtonClicked != wasButtonClicked && isLedOn != clientLedStatus;
 
-  Serial.println(canSendButtonData ? "✅ arduino può mandare il messaggio" : "❌ valore vecchio, non mando nessun json");
+  // Serial.println(canSendButtonData ? "✅ arduino può mandare il messaggio" : "❌ valore vecchio, non mando nessun json");
 
   if (canSendButtonData) {
     const String jsonResponse = "arduino:{'button':" + String(isButtonClicked) +
