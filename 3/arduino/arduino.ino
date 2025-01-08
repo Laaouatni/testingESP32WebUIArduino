@@ -14,19 +14,18 @@ void setup() {
   pinMode(arduinoComponents.button, INPUT);
 }
 
-bool wasButtonClicked = true;
+bool previousLedValue = false;
 bool clientLedStatus = false;
 
 void loop() {
   listenToNewSerialData(&myCallback);
 
   const int isButtonClicked = digitalRead(arduinoComponents.button);
-  // Serial.println("arduino isButtonClicked: " + String(isButtonClicked));
   digitalWrite(arduinoComponents.led, isButtonClicked || clientLedStatus);
   const int isLedOn = digitalRead(arduinoComponents.led);
   // Serial.println("valore led arduino: " + String(isLedOn));
   const bool canSendButtonData =
-      isButtonClicked != wasButtonClicked; 
+      isLedOn != previousLedValue; 
 
   // Serial.println(canSendButtonData ? "✅ arduino può mandare il messaggio" : "❌ valore vecchio, non mando nessun json");
 
@@ -37,7 +36,7 @@ void loop() {
     Serial.println("➡️ arduino ha mandato al client il json: " + jsonResponse);
   };
 
-  wasButtonClicked = isButtonClicked;
+  previousLedValue = isLedOn;
 }
 
 void myCallback(String esp32value) {
