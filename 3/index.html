@@ -23,7 +23,7 @@
     ws.addEventListener("message",
       (message) => {
         const data = JSON.parse(message.data);
-        if(data.arduino){
+        if (data.arduino) {
           globalState.state.isLedOn = data.arduino.isLedOn;
         }
       });
@@ -35,14 +35,14 @@
 
   <template id="laa-led" class="p-2 rounded-xl grid {thisComponent.state.isLedOn == 1 ? 'bg-green-500' : 'bg-red-500'}">
     <div>il led è <span data-var="{thisComponent.state.isLedOn == 1 ? 'accesso' : 'spento'}"></span></div>
-    <input type="range" min="0" max="1" step="1" value="{thisComponent.state.isLedOn}"
-      oninput="globalState.state.isLedOn = this.value">
+    <input id="checkbox" type="range" min="0" max="1" step="1" oninput="globalState.state.isLedOn = this.value">
     <script>
       const thisComponent = document.currentScript.parentElement;
+      const checkbox = thisComponent.shadowRoot.querySelector("#checkbox");
       thisComponent.state.isLedOn = 0;
       globalState.listenToVariableChange("isLedOn", (value) => {
         thisComponent.state.isLedOn = value;
-        console.log(thisComponent.state.isLedOn);
+        checkbox.value = value;
       });
     </script>
   </template>
