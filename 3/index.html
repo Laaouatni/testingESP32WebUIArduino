@@ -35,11 +35,11 @@
 
   <template id="laa-led" class="p-2 rounded-xl grid {thisComponent.state.isLedOn == 1 ? 'bg-green-500' : 'bg-red-500'}">
     <div>il led è <span data-var="{thisComponent.state.isLedOn == 1 ? 'accesso' : 'spento'}"></span></div>
-    <input id="checkbox" type="range" min="0" max="1" step="1" oninput="globalState.state.isLedOn = this.value">
+    <input id="checkbox" type="range" min="0" max="1" step="1"
+      oninput="ws.send(JSON.stringify({client:{isLedOn:Number(this.value)}}))">
     <script>
       const thisComponent = document.currentScript.parentElement;
       const checkbox = thisComponent.shadowRoot.querySelector("#checkbox");
-      thisComponent.state.isLedOn = 0;
       globalState.listenToVariableChange("isLedOn", (value) => {
         thisComponent.state.isLedOn = value;
         checkbox.value = value;
