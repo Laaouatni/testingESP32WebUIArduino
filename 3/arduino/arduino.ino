@@ -32,8 +32,8 @@ void loop() {
   // Serial.println(canSendButtonData ? "✅ arduino può mandare il messaggio" : "❌ valore vecchio, non mando nessun json");
 
   if (canSendButtonData) {
-    const String jsonResponse = "\"arduino\":{\"button\":" + String(isButtonClicked) +
-                                ",\"isLedOn\":" + String(isLedOn) + "}";
+    const String jsonResponse = "{\"arduino\":{\"button\":" + String(isButtonClicked) +
+                                ",\"isLedOn\":" + String(isLedOn) + "}}";
 
     Serial2.println(jsonResponse);
     Serial.println("➡️ arduino ha mandato al client il json: " + jsonResponse);
