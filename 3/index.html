@@ -22,9 +22,10 @@
 
     ws.addEventListener("message",
       (message) => {
-        console.log(message.data);
-        console.log(JSON.parse(message.data));
-        // globalState.state.isLedOn = JSON.parse(message.data).arduino.isLedOn;
+        const data = JSON.parse(message.data);
+        if(data.arduino){
+          globalState.state.isLedOn = data.arduino.isLedOn;
+        }
       });
   </script>
 </head>
